@@ -1,15 +1,29 @@
-FROM continuumio/miniconda3:4.12.0
-#FROM continuumio/miniconda3:24.5.0-0
+FROM python:3.8-slim
 
-ENV PATH /opt/conda/bin:$PATH
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        python3-dev \
+        build-essential \
+        libxml2-dev \
+        libxslt1-dev \
+        libgl1 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN conda install python=3.8 -y && \
-    conda config --append channels bioconda && \
-    conda config --append channels conda-forge && \
-    conda install -c bioconda ete3=3.1.3 pandas=1.5.3 -y && \
-    conda clean -a -y
-    
-#CMD ["ete3"]
+RUN pip install --no-cache-dir ete3 numpy six lxml pandas==1.5.3
+
 CMD ["python"]
 
 
+#FROM continuumio/miniconda3:4.12.0
+#FROM continuumio/miniconda3:24.5.0-0
+
+#ENV PATH /opt/conda/bin:$PATH
+
+#RUN conda install python=3.8 -y && \
+#    conda config --append channels bioconda && \
+#    conda config --append channels conda-forge && \
+#    conda install -c bioconda ete3=3.1.3 pandas=1.5.3 -y && \
+#    conda clean -a -y
+    
+#CMD ["ete3"]
+#CMD ["python"]
