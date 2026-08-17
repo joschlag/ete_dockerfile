@@ -1,4 +1,5 @@
-FROM continuumio/miniconda3:24.5.0-0
+FROM continuumio/miniconda3:4.12.0
+#FROM continuumio/miniconda3:24.5.0-0
 
 ENV PATH /opt/conda/bin:$PATH
 
