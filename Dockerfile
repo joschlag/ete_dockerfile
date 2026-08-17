@@ -11,6 +11,13 @@ RUN apt-get update && \
 
 RUN pip install --no-cache-dir ete3 numpy six lxml pandas==1.5.3
 
+# Build ETE3 taxonomy database inside the container
+RUN python - << 'EOF'
+from ete3 import NCBITaxa
+ncbi = NCBITaxa()
+ncbi.update_taxonomy_database()
+EOF
+
 CMD ["python"]
 
 
