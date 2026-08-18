@@ -1,20 +1,39 @@
-FROM python:3.8-slim
+FROM python:3.11-slim
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         python3-dev \
         build-essential \
         libxml2-dev \
-        libxslt1-dev \
-        libgl1 && \
+        libxslt1-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir ete3 numpy six lxml pandas==1.5.3
-
-# Build ETE3 taxonomy database inside the container
-RUN python -c "from ete3 import NCBITaxa; NCBITaxa().update_taxonomy_database()"
+RUN pip install --no-cache-dir \
+        pandas \
+        taxopy \
+        numpy \
+        lxml \
+        six
 
 CMD ["python"]
+
+#FROM python:3.8-slim
+
+#RUN apt-get update && \
+#    apt-get install -y --no-install-recommends \
+#        python3-dev \
+#        build-essential \
+#        libxml2-dev \
+#        libxslt1-dev \
+#        libgl1 && \
+#    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+#RUN pip install --no-cache-dir ete3 numpy six lxml pandas==1.5.3
+
+# Build ETE3 taxonomy database inside the container
+#RUN python -c "from ete3 import NCBITaxa; NCBITaxa().update_taxonomy_database()"
+
+#CMD ["python"]
 
 
 #FROM continuumio/miniconda3:4.12.0
